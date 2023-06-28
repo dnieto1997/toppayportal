@@ -1,0 +1,36 @@
+<div class="dashboard-nav">
+    <header>
+        <a class="menu-toggle">
+            <i class="fa fa-bars"></i>
+        </a>
+        <a class="brand-logo">
+            <!-- <i class="fa fa-anchor"></i>  -->
+            <span> 
+                <img src="assets/logotop.png" alt="Logo" style="width: 50px;">
+            </span>
+        </a>
+    </header>
+    <p style="font-size: 14px; text-align: center; color: #FFFFFF; font-weight: bolder; ">{{nomUsuario}}</p>
+    <nav class="dashboard-nav-list" >
+        <a class="dashboard-nav-item" *ngFor="let menu of leftMenu" [routerLink]="'/'+menu.menu">
+            <i class="fa fa-circle-thin" ></i>
+            {{menu.alias}}
+        </a>
+        <!-- <div class='dashboard-nav-dropdown'>
+            <a class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+                <i class="fas fa-photo-video"></i> 
+                Media 
+            </a>
+            <div class='dashboard-nav-dropdown-menu'>
+                <a class="dashboard-nav-dropdown-item">All</a>
+                <a class="dashboard-nav-dropdown-item">Recent</a>
+                <a class="dashboard-nav-dropdown-item">Images</a>
+                <a class="dashboard-nav-dropdown-item">Video</a>
+            </div>
+        </div> -->
+        <div class="nav-item-divider"></div>
+        <a class="dashboard-nav-item" (click)="logout()" style="cursor: pointer;"><i class="fa fa-sign-out"></i> Logout </a>
+        
+    </nav>
+    <!-- {{this.routerLink |json}} -->
+</div>

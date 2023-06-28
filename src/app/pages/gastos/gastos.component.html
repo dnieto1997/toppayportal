@@ -1,0 +1,147 @@
+<app-navbar></app-navbar>
+<div class="container-fluid">
+    <br>
+    <p-fieldset legend="Gastos" >
+        
+        <button class="btn btn-primary" (click)="op.toggle($event)">Crear gasto</button>
+        <hr>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <tr>
+                    <td><strong>Fecha Inicial</strong></td>
+                    <td><strong>Fecha Final</strong></td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="date" class="form-control" [(ngModel)]="fech1">
+                    </td>
+                    <td>
+                        <input type="date" class="form-control" [(ngModel)]="fech2">
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button class="btn btn-dark" (click)="Buscar()">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                Buscar
+            </button>
+            <button class="btn btn-danger" (click)="Limpiar()">
+                <i class="fa fa-filter" aria-hidden="true"></i>
+                Limpiar
+            </button>
+        </div>
+
+        <p-table #dt [value]="table" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"  [tableStyle]="{'min-width': '50rem'}" 
+        [globalFilterFields]="['id','user_name','reference','user_doc']" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+        scrollHeight="600px">
+    
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <button type="button" pButton pRipple icon="pi pi-file" (click)="exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+            </div>
+        </ng-template>
+    
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
+                    <th pSortableColumn="fecha">FECHA <p-sortIcon field="fecha"></p-sortIcon></th>
+                    <th pSortableColumn="valor">VALOR <p-sortIcon field="valor"></p-sortIcon></th>
+                    <th pSortableColumn="detalles">DETALLES <p-sortIcon field="detalles"></p-sortIcon></th>
+                    <th pSortableColumn="usuario">USUARIO<p-sortIcon field="usuario"></p-sortIcon></th>
+                    <th pSortableColumn="fechasis">FECHA SISTEMA<p-sortIcon field="fechasis"></p-sortIcon></th>
+                    <th>ACCION</th>
+                </tr>
+                <tr>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'id')"  placeholder="ID" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'fecha')"  placeholder="FECHA" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'valor')"  placeholder="VALOR" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'detalle')"  placeholder="DETALLES" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'usuario')"  placeholder="USUARIO" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'fechasis')"  placeholder="FECHA SISTEMA" class="w-full">
+                    </th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-info>
+                <tr>
+                    <td>
+                        <p>
+                            <strong>{{info.id}}</strong>
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            <strong>{{info.fecha}}</strong>
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            <strong>{{info.valor | number}}</strong> 
+                        </p>
+                    </td>
+                    <td><p>{{info.detalle}}</p></td>
+                    <td><p>{{info.log_usuario}}</p></td>
+                    <td><p>{{ FormatoFecha(info.fechasis) }}</p></td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-danger" title="Eliminar" (click)="Eliminar(info.id)"><i class="fa fa-ban" aria-hidden="true"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+            
+            <ng-template pTemplate="summary">
+                There are {{table?.length}} table
+            </ng-template>
+        </p-table>
+
+        <p-overlayPanel #op>
+            <ng-template pTemplate>
+                <div class="mb-3">
+                    <div class="row">
+                        <div class="col-md-12 ">
+                            <span>fecha</span><br>
+                           <input type="date" class="form-control" pInputText [(ngModel)]="inputFecha">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12 ">
+                            <span>Valor</span><br>
+                            <p-inputNumber inputId="integeronly"  [(ngModel)]="inputValor"></p-inputNumber>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12 ">
+                            <span>Detalles</span><br>
+                            <textarea [rows]="5" [cols]="30" pInputTextarea  [(ngModel)]="inputDetalles"></textarea>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <button pButton type="button" label="Guardar" (click)="guardar()"></button>
+                        </div>
+                    </div>
+                  
+                </div>
+            </ng-template>
+        </p-overlayPanel>
+
+    </p-fieldset>
+
+</div>

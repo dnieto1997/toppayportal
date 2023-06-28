@@ -1,0 +1,123 @@
+<app-navbar></app-navbar>
+<div class="container-fluid">
+    <br>
+    <p-fieldset legend="Lista Negra" >
+        
+        <div class="mb-3">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4 text-center">
+                    <span>Seleccione el archivo de excel</span><br>
+                    <input #fullName type="file" name="file" class="form-control" id="inputGroupFile" required (change)="handleImport($event)"
+                        accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4 text-center">
+                    <button pButton type="button" icon="pi pi-search" label="Examinar" (click)="cambiar()"></button>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+          
+        </div>
+
+        <hr>
+
+        <button class="btn btn-primary" (click)="showDialog()">
+            <i class="pi pi-plus"></i> 
+            Crear
+        </button>
+        <hr>
+
+        <div class="table-responsive">
+
+            <p-table #dt [value]="tableLista" styleClass="p-datatable-gridlines" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" 
+            [rowsPerPageOptions]="[10,25,50]" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+            [scrollable]="true" scrollHeight="400px">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
+                        <th pSortableColumn="cedula">CEDULA <p-sortIcon field="cedula"></p-sortIcon></th>
+                        <th pSortableColumn="fecha">FECHA <p-sortIcon field="fecha"></p-sortIcon></th>
+                        <th>ACCION</th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <input pInputText type="number" (input)="filter($event.target, 'id')"  placeholder="ID" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="number" (input)="filter($event.target, 'cedula')"  placeholder="CEDULA" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'fecha')"  placeholder="FECHA" class="w-full">
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-user let-ri="rowIndex">
+                    <tr>
+                        <td>
+                            {{user.id}}
+                        </td>
+                        <td>
+                            {{user.cedula | number}}
+                        </td>
+                        <td>
+                            {{cambiarHora(user.fecha)}}
+                        </td>
+                        <td style="text-align:center">
+                            <button  pButton pRipple type="button"  icon="pi pi-pencil" (click)="onRowEditInit(user)" class="p-button-rounded p-button-text"></button>
+                            <button  pButton pRipple type="button"  icon="pi pi-times" (click)="onRowEditCancel(user, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="flex align-items-center justify-content-between">
+                        In total there are {{tableLista ? tableLista.length : 0 }} Users.
+                    </div>
+                </ng-template>
+            </p-table>
+
+        </div>
+
+
+    </p-fieldset>
+</div>
+
+<p-dialog header="Agregar cedula" [(visible)]="display" [style]="{width: '50vw'}">
+    <div class="row">
+        <div class="col-md-12 text-start">
+            <span>Cedula</span><br>
+            <input type="number" class="form-control" placeholder="Celular"  name ="cedula" [(ngModel)]="inpuLista.cedula">
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-12 text-start">
+            <button class="btn btn-primary" (click)="guardar()">
+                <i class="pi pi-plus"></i> 
+                Guardar
+            </button>
+        </div>
+    </div>
+</p-dialog>
+
+<p-dialog header="Editar cedula" [(visible)]="display2" [style]="{width: '50vw'}">
+    <div class="row">
+        <div class="col-md-12 text-start">
+            <span>Cedula</span><br>
+            <input type="number" class="form-control" placeholder="Celular"  name ="cedula" [(ngModel)]="inpuLista.cedula">
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-12 text-start">
+            <button class="btn btn-primary" (click)="editar()">
+                <i class="pi pi-plus"></i> 
+                Editar
+            </button>
+        </div>
+    </div>
+</p-dialog>

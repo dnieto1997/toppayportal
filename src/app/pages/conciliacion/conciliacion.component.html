@@ -1,0 +1,97 @@
+<app-navbar></app-navbar>
+<div class="container-fluid">
+    <br>
+    <p-fieldset legend="Conciliación" >
+        
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <tr>
+                    <td><strong>Fecha</strong></td>
+                    <td><strong>Metodo</strong></td>
+                    <td><strong>Excel</strong></td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="date" class="form-control" [(ngModel)]="fech">
+                    </td>
+                    <td>
+                        <select name="metodo" class="form-control"  [(ngModel)]="metodo" >
+                            <option *ngFor="let m of arrMetodo" value="{{m.method }}" >{{m.method }}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="file" name="file" class="form-control" id="inputGroupFile" required (change)="handleImport($event)"
+                        accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button class="btn btn-dark" (click)="Buscar()">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                Buscar
+            </button>
+        </div>
+        <hr>
+        <h1>Total: ${{total | number}}</h1>
+        
+        <p-table #dt [value]="table" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"  [tableStyle]="{'min-width': '50rem'}" 
+        [globalFilterFields]="['id','banco','tipo','destino']" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+        scrollHeight="600px">
+    
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="id">id <p-sortIcon field="id"></p-sortIcon></th>
+                    <th pSortableColumn="banco">banco <p-sortIcon field="banco"></p-sortIcon></th>
+                    <th pSortableColumn="tipo">tipo <p-sortIcon field="tipo"></p-sortIcon></th>
+                    <th pSortableColumn="destino">destino <p-sortIcon field="destino"></p-sortIcon></th>
+                    <th pSortableColumn="titular">titular <p-sortIcon field="titular"></p-sortIcon></th>
+                    <th pSortableColumn="valor">valor <p-sortIcon field="valor"></p-sortIcon></th>
+                    <th pSortableColumn="fecha">fecha <p-sortIcon field="fecha"></p-sortIcon></th>
+                    <th pSortableColumn="idmovimiento">idmovimiento <p-sortIcon field="idmovimiento"></p-sortIcon></th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-info>
+                <tr>
+                    <td><p>{{info.id}}</p></td>
+                    <td><p>{{info.banco}}</p></td>
+                    <td><p>{{info.tipo}}</p></td>
+                    <td><p>{{info.destino}}</p></td>
+                    <td><p>{{info.titular}}</p></td>
+                    <td><p>{{info.valor | number}}</p></td>
+                    <td><p>{{info.fecha}}</p></td>
+                    <td><p>{{info.idmovimiento}}</p></td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-success" title="Notificar" (click)="buscarMov(info)"><i class="pi pi-search" aria-hidden="true"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+            
+            <ng-template pTemplate="summary">
+                There are {{table?.length}} table
+            </ng-template>
+        </p-table>
+
+        <p-dialog header="Conciliacion" [(visible)]="display" [style]="{width: '50vw'}">
+            <div *ngFor="let ar of arrBusqueda" class="blockquote">
+               <strong>REFERENCE:</strong> {{ar.reference}} <br>
+                <strong>CLIENTE:</strong>   {{ar.user_name}}<br>
+               <strong># CUENTA:</strong>  {{ar.user_num_account}}<br>
+               <strong>ALIADO:</strong>    {{ar.merchant_name}}<br>
+               <strong>VALOR:</strong>     {{ar.amount | number}} <br>
+               <strong>STATUS:</strong>    {{ar.status}}<br>
+               <strong>TRANSACTION:</strong> {{ar.type_transaction}}<br>
+               <strong>FECHA:</strong>     {{ar.fecha}}
+                <button class="btn btn-primary" (click)="Seleccionar(ar.id)">
+                    <i class="pi pi-save" aria-hidden="true"></i>
+                    Seleccionar
+                </button>
+            </div>
+        </p-dialog>
+
+    </p-fieldset>
+</div>

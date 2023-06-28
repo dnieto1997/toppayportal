@@ -1,0 +1,218 @@
+<app-navbar></app-navbar>
+<div class="container-fluid">
+    <br>
+    <p-fieldset legend="Pay Out" >
+        <div *ngIf=" menu.tipo == 'MA'  ">
+        <div >
+            <button class="btn btn-primary" [routerLink]="'/importPayout'">Importar Pay Out</button> |
+            <button class="btn btn-success" [routerLink]="'/payoutsuccess'">Pay Out Success</button> |
+            <button *ngIf=" menu.pais == '1' " class="btn btn-warning" [routerLink]="'/payoutpagos'">Movimientos Realizados</button> 
+            <hr>
+        </div>
+    </div>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <tr>
+                    <td><strong>Fecha Inicial</strong></td>
+                    <td><strong>Fecha Final</strong></td>
+                    <td *ngIf="menu.tipo == 'MA' "><strong>Aliados</strong></td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="date" class="form-control" [(ngModel)]="fech1">
+                    </td>
+                    <td>
+                        <input type="date" class="form-control" [(ngModel)]="fech2">
+                    </td>
+                    <td *ngIf="menu.tipo == 'MA' ">
+                        <select name="aliado" class="form-control"  [(ngModel)]="aliado">
+                            <option *ngFor="let al of aliados" value="{{al.id}}" >{{al.merchant}}</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button class="btn btn-dark" (click)="Buscar()">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                Buscar
+            </button>
+            <button class="btn btn-danger" (click)="Limpiar()">
+                <i class="fa fa-filter" aria-hidden="true"></i>
+                Limpiar
+            </button>
+        </div>
+        <hr>
+        <div class="table-responsive">
+        
+            <div class="row">
+                <div class="col-12">
+                    <p-messages [(value)]="valorPayout"></p-messages>
+                </div>
+            </div>
+            
+            <p-table #dt [value]="table" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true"  [tableStyle]="{'min-width': '50rem'}" 
+            [globalFilterFields]="['id','user_name','reference','user_doc']" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+            scrollHeight="600px">
+        
+            <ng-template pTemplate="caption">
+                <div class="flex">
+                    <button type="button" pButton pRipple icon="pi pi-file" (click)="exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+                </div>
+            </ng-template>
+        
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>ACCION</th>
+                        <th pSortableColumn="uid">ID <p-sortIcon field="uid"></p-sortIcon></th>
+                        <th pSortableColumn="merchant_name" *ngIf="menu.tipo != 'TE'">ALIADO <p-sortIcon field="merchant_name"></p-sortIcon></th>
+                        <th pSortableColumn="user_name">USER <p-sortIcon field="user_name"></p-sortIcon></th>
+                        <th pSortableColumn="reference">REFERENCE <p-sortIcon field="reference"></p-sortIcon></th>
+                        <th pSortableColumn="user_doc">ID USER <p-sortIcon field="user_doc"></p-sortIcon></th>
+                        <th pSortableColumn="user_phone">USER PHONE <p-sortIcon field="user_phone"></p-sortIcon></th>
+                        <th pSortableColumn="method">FORMA PAGO <p-sortIcon field="method"></p-sortIcon></th>
+                        <th pSortableColumn="fecha"  style="width: 20%;">DATE <p-sortIcon field="fecha"></p-sortIcon></th>
+                        <th pSortableColumn="amount">AMOUNT <p-sortIcon field="amount"></p-sortIcon></th>
+                        <th pSortableColumn="currency">CURRENCY <p-sortIcon field="currency"></p-sortIcon></th>
+                        <th pSortableColumn="user_bank">BANK <p-sortIcon field="user_bank"></p-sortIcon></th>
+                        <th pSortableColumn="user_type_account">TYPEACCOUNT <p-sortIcon field="user_type_account"></p-sortIcon></th>
+                        <th pSortableColumn="user_num_account">NUMACCOUNT <p-sortIcon field="user_num_account"></p-sortIcon></th>
+                        <th pSortableColumn="cost">COST <p-sortIcon field="cost"></p-sortIcon></th>
+                        <th pSortableColumn="iva">IVA <p-sortIcon field="iva"></p-sortIcon></th>
+                        <th pSortableColumn="gmf" *ngIf="pais==1">GMF <p-sortIcon field="gmf"></p-sortIcon></th>
+                        <th pSortableColumn="motivo">MOTIVO <p-sortIcon field="motivo"></p-sortIcon></th>
+                        <th pSortableColumn="updated_at">UPDATE <p-sortIcon field="updated_at"></p-sortIcon></th>
+                        <th pSortableColumn="status">STATUS <p-sortIcon field="status"></p-sortIcon></th>
+                        <th *ngIf=" menu.tipo != 'TE'  ">ACCION</th>
+                    </tr>
+                    <tr>
+                        <th>
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'uid')"  placeholder="id" class="w-full">
+                        </th>
+                        <th *ngIf=" menu.tipo  != 'TE' ">
+                            <input pInputText type="text" (input)="filter($event.target, 'merchant_name')"  placeholder="Aliado" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'user_name')"  placeholder="user_name" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'reference')"  placeholder="reference" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'user_doc')"  placeholder="user_doc" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'user_phone')"  placeholder="user_phone" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'method')"  placeholder="method" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'fecha')"  placeholder="fecha" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'amount')"  placeholder="amount" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'currency')"  placeholder="currency" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'user_bank')"  placeholder="user_bank" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'user_type_account')"  placeholder="user_type_account" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'user_num_account')"  placeholder="user_num_account" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'cost')"  placeholder="cost" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'iva')"  placeholder="iva" class="w-full">
+                        </th>
+                        <th  *ngIf="pais==1">
+                            <input pInputText type="text" (input)="filter($event.target, 'gmf')"  placeholder="GMF" class="w-full">
+                        </th>
+                        <th>
+                           
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'updated_at')"  placeholder="UPDATE" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'estado')"  placeholder="status" class="w-full">
+                        </th>
+                        <th *ngIf=" menu.tipo  != 'TE' "></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-info>
+                    <tr>
+                        <td>
+                            <button type="button" (click)="notificar(info)"  class="btn btn-success" title="Notificar"><i class="pi pi-comment"></i></button>
+                        </td>
+                        <td>
+                            <p>
+                                <strong>{{info.uid}}</strong>
+                            </p>
+                        </td>
+                        <td *ngIf=" menu.tipo != 'TE' ">
+                            <p>
+                                <strong>{{info.merchant_name}}</strong>
+                            </p>
+                        </td>
+                        <td>
+                            <p class="s">
+                                <strong>{{info.user_name}}</strong> 
+                                <br> 
+                                <samp>{{info.user_email}}</samp>
+                            </p>
+                        </td>
+                        <td><p>{{info.reference}}</p></td>
+                        <td><p>{{info.user_doc}}</p></td>
+                        <td><p>{{info.user_phone}}</p></td>
+                        <td><p>{{info.method}}</p></td>
+                        <td><p>{{ info.fecha }} <br> <small class="text-success">{{info.hora}}</small></p></td>
+                        <td><p>{{info.amount | number}}</p></td>
+                        <td><p>{{info.currency}}</p></td>
+                        <td><p>{{info.user_bank}}</p></td>
+                        <td><p>{{info.user_type_account}}</p></td>
+                        <td><p>{{info.user_num_account}}</p></td>
+                        <td><p>{{info.cost}}</p></td>
+                        <td><p>{{info.iva}}</p></td>
+                        <td  *ngIf="pais==1"><p>{{info.gmf | number}}</p></td>
+                        <td><p>{{info.motivo}}</p></td>
+                        <td><p>{{ FormatoFecha(info.updated_at) }}</p></td>
+                        <td>
+                            <span [ngClass]="getSomeClass(info.status)" (click)="verMotivo(info.reference)">{{ info.estado  }}</span>
+                        </td>
+                        <td *ngIf=" menu.tipo == 'MA' ">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" (click)="pagado(info.uid)"     class="btn btn-secondary" title="Pagado"><i class="fa fa-money" aria-hidden="true"></i></button>
+                                
+                                <p-overlayPanel #op>
+                                    <textarea rows="5" cols="30" pInputTextarea [(ngModel)]="motivo"></textarea>
+                                    <br>
+                                    <button type="button" (click)="rechazado(info.uid)"  class="btn btn-danger" title="Rechazado">ACEPTAR</button>
+                                </p-overlayPanel>
+
+                                <button type="button" (click)="op.toggle($event)" class="btn btn-danger" title="Rechazado"><i class="fa fa-ban" aria-hidden="true"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+               <!--  (click)="rechazado(info.uid)" -->
+                <ng-template pTemplate="summary">
+                    There are {{table?.length}} table
+                </ng-template>
+            </p-table>
+        
+        </div>
+
+    </p-fieldset>
+</div>
+   
+

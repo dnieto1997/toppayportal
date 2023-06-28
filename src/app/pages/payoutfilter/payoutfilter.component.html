@@ -1,0 +1,185 @@
+<app-navbar></app-navbar>
+<div class="container-fluid">
+    <br>
+    <p-fieldset legend="Consulta de Movimientos" >
+       <!--  <div *ngIf="tipo == 'MA' "> -->
+        <div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <tr>
+                    <td><strong>Campo</strong></td>
+                    <td><strong>Busqueda</strong></td>
+                </tr>
+                <tr>
+                    <td>
+                        <select name="" class="form-control"  [(ngModel)]="tipo">
+                            <option value="1">Reference</option>
+                            <option value="2">Document</option>
+                            <option value="3">ID</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" [(ngModel)]="contenido">
+                    </td>
+                    <!-- <td>
+                        <input type="number" class="form-control" [(ngModel)]="user">
+                    </td> -->
+                </tr>
+            </table>
+        </div>
+        
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button class="btn btn-dark" (click)="Buscar()">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                Buscar
+            </button>
+        </div>
+        <hr>
+        <div class="table-responsive">
+            <p-table #dt [value]="table" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"  [tableStyle]="{'min-width': '50rem'}" 
+            [globalFilterFields]="['id','user_name','reference','user_doc']" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+            scrollHeight="600px">
+
+                <ng-template pTemplate="header">
+                    <tr  class="table-primary">
+                        <th pSortableColumn="uid">uid <p-sortIcon field="uid"></p-sortIcon></th>
+                        <th pSortableColumn="reference">reference <p-sortIcon field="reference"></p-sortIcon></th>
+                        <th pSortableColumn="merchant_name">merchant_name <p-sortIcon field="merchant_name"></p-sortIcon></th>
+                        <th pSortableColumn="currency">currency <p-sortIcon field="currency"></p-sortIcon></th>
+                        <th pSortableColumn="amount">amount <p-sortIcon field="amount"></p-sortIcon></th>
+                        <th pSortableColumn="user_doc">user_doc <p-sortIcon field="user_doc"></p-sortIcon></th>
+                        <th pSortableColumn="user_type">user_type <p-sortIcon field="user_type"></p-sortIcon></th>
+                        <th pSortableColumn="user_name">user_name <p-sortIcon field="user_name"></p-sortIcon></th>
+                        <th pSortableColumn="user_phone">user_phone <p-sortIcon field="user_phone"></p-sortIcon></th>
+                        <th pSortableColumn="user_email">user_email <p-sortIcon field="user_email"></p-sortIcon></th>
+                        <th pSortableColumn="user_address">user_address <p-sortIcon field="user_address"></p-sortIcon></th>
+                        <th pSortableColumn="user_typeuser">user_typeuser <p-sortIcon field="user_typeuser"></p-sortIcon></th>
+                        <th pSortableColumn="type_transaction">type_transaction <p-sortIcon field="type_transaction"></p-sortIcon></th>
+                        <th pSortableColumn="method">method <p-sortIcon field="method"></p-sortIcon></th>
+                        <th pSortableColumn="cost">cost <p-sortIcon field="cost"></p-sortIcon></th>
+                        <th pSortableColumn="iva">iva <p-sortIcon field="iva"></p-sortIcon></th>
+                        <th pSortableColumn="user_bank">user_bank <p-sortIcon field="user_bank"></p-sortIcon></th>
+                        <th pSortableColumn="user_type_account">user_type_account <p-sortIcon field="user_type_account"></p-sortIcon></th>
+                        <th pSortableColumn="user_num_account">user_num_account <p-sortIcon field="user_num_account"></p-sortIcon></th>
+                        <th pSortableColumn="status">status <p-sortIcon field="status"></p-sortIcon></th>
+                        <th pSortableColumn="notify">notify <p-sortIcon field="notify"></p-sortIcon></th>
+                        <th pSortableColumn="created_at">created_at <p-sortIcon field="created_at"></p-sortIcon></th>
+                        <th pSortableColumn="updated_at">updated_at <p-sortIcon field="updated_at"></p-sortIcon></th>
+                        <th pSortableColumn="motivo">Motivo <p-sortIcon field="motivo"></p-sortIcon></th>
+                    </tr>
+
+                    <tr>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'uid')"  placeholder="id" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'reference')"  placeholder="reference" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'merchant_name')"  placeholder="merchant_name" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'currency')"  placeholder="currency" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'amount')"  placeholder="amount" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'user_doc')"  placeholder="user_doc" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'user_type')"  placeholder="user_type" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'user_name')"  placeholder="user_name" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'user_phone')"  placeholder="user_phone" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'user_email')"  placeholder="user_email" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'user_address')"  placeholder="user_address" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'user_typeuser')"  placeholder="user_typeuser" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'type_transaction')"  placeholder="type_transaction" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'method')"  placeholder="method" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'cost')"  placeholder="cost" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'iva')"  placeholder="iva" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'user_bank')"  placeholder="user_bank" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'user_type_account')"  placeholder="user_type_account" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'user_num_account')"  placeholder="user_num_account" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'status')"  placeholder="status" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'notify')"  placeholder="notify" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'created_at')"  placeholder="created_at" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'updated_at')"  placeholder="updated_at" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'motivo')"  placeholder="motivo" class="w-full">
+                        </th>
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-info>
+                    <tr>
+                        <td>{{info.uid}}</td>
+                        <td>{{info.reference}}</td>
+                        <td>{{info.merchant_name}}</td>
+                        <td>{{info.currency}}</td>
+                        <td>{{info.amount}}</td>
+                        <td>{{info.user_doc}}</td>
+                        <td>{{info.user_type}}</td>
+                        <td>{{info.user_name}}</td>
+                        <td>{{info.user_phone}}</td>
+                        <td>{{info.user_email}}</td>
+                        <td>{{info.user_address}}</td>
+                        <td>{{info.user_typeuser}}</td>
+                        <td>{{info.type_transaction}}</td>
+                        <td>{{info.method}}</td>
+                        <td>{{info.cost}}</td>
+                        <td>{{info.iva}}</td>
+                        <td>{{info.user_bank}}</td>
+                        <td>{{info.user_type_account}}</td>
+                        <td>{{info.user_num_account}}</td>
+                        <td>{{info.status}}</td>
+                        <td>{{info.notify}}</td>
+                        <td>{{info.fechacreacion}} {{info.horacreacion}}</td>
+                        <td>{{info.fechactualizacion}} {{info.horactualizacion}}</td>
+                        <td>{{info.motivo}}</td>
+                    </tr>
+                </ng-template>
+                
+                <ng-template pTemplate="summary">
+                    There are {{table?.length}} table
+                </ng-template>
+            </p-table>
+        </div>
+    </p-fieldset>
+</div>
+   
+

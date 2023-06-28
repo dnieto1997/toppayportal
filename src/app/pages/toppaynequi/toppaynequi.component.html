@@ -1,0 +1,156 @@
+<app-navbar></app-navbar>
+
+<p-toast></p-toast>
+<p-confirmPopup></p-confirmPopup>
+
+<div class="container-fluid">
+    <br>
+    <p-fieldset legend="Configurar Parametros" >
+      
+        <h4>Aliados</h4>
+        <p-multiSelect [options]="aliado" [(ngModel)]="inputAliado" optionLabel="name" optionValue="code" [style]="{width: '100%'}"></p-multiSelect>
+        <br> <br>
+        <h4>Monto Maximo</h4>
+        <p-inputNumber [(ngModel)]="monto" inputId="minmax" inputId="minmax" mode="decimal" [min]="0" > </p-inputNumber>
+        <hr>
+
+        <p-button label="Guardar" icon="pi pi-save" iconPos="right" (click)="guardar($event)"></p-button>
+
+        <p-messages [(value)]="messages" [enableService]="false" [closable]="false"></p-messages>
+    </p-fieldset>
+    <hr>
+    <p-fieldset legend="Listado de pendientes" >
+
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <tr>
+                    <td><strong>Fecha Inicial</strong></td>
+                    <td><strong>Fecha Final</strong></td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="date" class="form-control" [(ngModel)]="fech1">
+                    </td>
+                    <td>
+                        <input type="date" class="form-control" [(ngModel)]="fech2">
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button class="btn btn-dark" (click)="verTabla()">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                Buscar
+            </button>
+            <button class="btn btn-danger" (click)="Limpiar()">
+                <i class="fa fa-filter" aria-hidden="true"></i>
+                Limpiar
+            </button>
+        </div>
+
+       <p-table #dt [value]="arrTabla" styleClass="p-datatable-gridlines" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" 
+        [rowsPerPageOptions]="[50,100]" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+        [scrollable]="true" scrollHeight="400px">
+
+            <ng-template pTemplate="caption">
+                <div class="flex">
+                    <button type="button" pButton pRipple icon="pi pi-file" (click)="exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+                </div>
+            </ng-template>
+
+           <ng-template pTemplate="header">
+               <tr>
+                    <th>Pagar</th>
+                    <th  pSortableColumn="uid" >ID <p-sortIcon field="uid"></p-sortIcon> </th>
+                    <th  pSortableColumn="merchant_name" >MERCHANT <p-sortIcon field="merchant_name"></p-sortIcon> </th>
+                    <th  pSortableColumn="reference" >REFERENCIA <p-sortIcon field="reference"></p-sortIcon> </th>
+                    <th  pSortableColumn="user_bank" >BANCO <p-sortIcon field="user_bank"></p-sortIcon> </th>
+                    <th  pSortableColumn="method" >METODO <p-sortIcon field="method"></p-sortIcon> </th>
+                    <th  pSortableColumn="user_doc" >NUMERO DOCUMENTO <p-sortIcon field="user_doc"></p-sortIcon> </th>
+                    <th  pSortableColumn="user_name" >NOMBRE <p-sortIcon field="user_name"></p-sortIcon> </th>
+                    <th  pSortableColumn="user_num_account" >CELULAR <p-sortIcon field="user_num_account"></p-sortIcon> </th>
+                    <th  pSortableColumn="amount" >VALOR <p-sortIcon field="amount"></p-sortIcon> </th>
+                    <th  pSortableColumn="merchant_email" >CORREO <p-sortIcon field="merchant_email"></p-sortIcon> </th>
+
+               </tr>
+               <tr>
+                    <th></th>
+                    <th>
+                        <input pInputText type="number" (input)="filter($event.target, 'uid')"  placeholder="ID" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'merchant_name')"  placeholder="MERCHANT" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'reference')"  placeholder="REFERENCIA" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'user_bank')"  placeholder="BANCO" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'method')"  placeholder="METODO" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="number" (input)="filter($event.target, 'user_doc')"  placeholder="NUMERO DOCUMENTO" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'user_name')"  placeholder="NOMBRE" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="number" (input)="filter($event.target, 'user_num_account')"  placeholder="CELULAR" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="number" (input)="filter($event.target, 'amount')"  placeholder="VALOR" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'merchant_email')"  placeholder="CORREO" class="w-full">
+                    </th>
+               </tr>
+           </ng-template>
+           <ng-template pTemplate="body" let-user let-ri="rowIndex">
+               <tr>
+                <td>
+                    <button type="button" (click)="notificar(user)"  class="btn btn-success" title="Notificar">Pagar</button>
+                </td>
+                    <td>
+                        {{user.uid}}
+                     </td>
+                    <td>
+                        {{user.merchant_name}}
+                    </td>
+                    <td>
+                        {{user.reference}}
+                    </td>
+                    <td>
+                        {{user.user_bank}}
+                    </td>
+                    <td>
+                        {{user.method}}
+                    </td>
+                    <td>
+                        {{user.user_doc}}
+                    </td>
+                    <td>
+                        {{user.user_name}}
+                    </td>
+                    <td>
+                        {{user.user_num_account}}
+                    </td>
+                    <td>
+                        {{user.amount | number}}
+                    </td>
+                    <td>
+                        {{user.merchant_email}}
+                    </td>
+                  
+               </tr>
+           </ng-template>
+           <ng-template pTemplate="summary">
+               <div class="flex align-items-center justify-content-between">
+                   In total there are {{arrTabla ? arrTabla.length : 0 }} Users.
+               </div>
+           </ng-template>
+       </p-table>
+
+    </p-fieldset>
+</div>

@@ -1,0 +1,384 @@
+<app-navbar></app-navbar>
+<div class="container-fluid">
+    <br>
+    <p-fieldset legend="Prestamos" >
+        
+        <p-tabView >
+            <p-tabPanel header="Informacion general" [selected]="select1" [disabled]="false">
+                <div class="row">
+                   
+                    <div class="mb-3">
+                        <div class="col-md-6">
+                            <span>Correo electronico</span>
+                            <input type="email" class="form-control" pInputText [(ngModel)]="inpCorreo">
+                        </div>
+                        <div class="col-md-6">
+                            <span>Numero de celular</span>
+                            <input type="number" class="form-control" pInputText [(ngModel)]="inpCelular">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col-md-6">
+                            <span>Repetir Numero de celular</span>
+                            <input type="number" class="form-control" pInputText [(ngModel)]="inpRcelular">
+                        </div>
+                        <div class="col-md-6">
+                            <span>Contraseña</span><br>
+                            <p-password [toggleMask]="true" [(ngModel)]="inpPassword" ></p-password>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col-md-6">
+                            <p-checkbox name="groupname" value="val1" class="checkPoliticas" ></p-checkbox>
+                            <p-button (click)="showMaximizableDialog()" icon="pi pi-external-link" label="Politicas" styleClass="p-button-link"></p-button>
+                            <p-dialog header="Politicas" [(visible)]="displayMaximizable" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true" [baseZIndex]="10000"
+                                [draggable]="false" [resizable]="false">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                                        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                        <ng-template pTemplate="footer">
+                                          <!--   <p-button icon="pi pi-check" (click)="displayMaximizable=false" label="Yes" class="p-button-text"></p-button>
+                                            <p-button icon="pi pi-times" (click)="displayMaximizable=false" label="No"></p-button> -->
+                                        </ng-template>
+                            </p-dialog>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <span class="p-buttonset">
+                            <button pButton type="button" label="Foto con cedula" icon="pi pi-camera"></button>
+                            <button pButton type="button" label="Foto cedula" icon="pi pi-camera"></button>
+                            <button pButton type="button" label="Foto reverso cedula" icon="pi pi-camera"></button>
+                        </span>
+                    </div>
+                    <p-button label="Siguente" (click)="btnsgt1()"></p-button>
+                </div>
+            </p-tabPanel >
+            <p-tabPanel header="Informacion Personal" [selected]="select2" [disabled]="true">
+                <form>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Primer nombre</span>
+                            <input type="text" class="form-control" pInputText>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Segundo nombre</span>
+                            <input type="text" class="form-control" pInputText>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Primer apellido</span>
+                            <input type="text" class="form-control" pInputText>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Segundo apellido</span>
+                            <input type="text" class="form-control" pInputText>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Personas a cargo</span>
+                            <input type="text" class="form-control" pInputText>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Estado civil</span>
+                            <input type="text" class="form-control" pInputText>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Numero de hijos</span>
+                            <input type="text" class="form-control" pInputText>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Sexo</span>
+                            <input type="text" class="form-control" pInputText>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Fecha de nacimiento</span>
+                            <input type="text" class="form-control" pInputText>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Pais de nacimieno</span>
+                            <input type="text" class="form-control" pInputText>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Departamento de nacimieno</span>
+                            <input type="text" class="form-control" pInputText>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Ciudad de nacimieno</span>
+                            <input type="text" class="form-control" pInputText>
+                        </div>
+                    </div>
+                </form>
+            </p-tabPanel>
+            <p-tabPanel header="Informacion Personal" [selected]="select3" [disabled]="true">
+                <form>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Tipo de identificacion</span>
+                            <input type="text" class="form-control" pInputText>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Numero de identificacion</span>
+                            <input type="number" class="form-control" pInputText>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>fecha de expedicion</span>
+                            <input type="date" class="form-control" pInputText>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Pais de expedicion</span>
+                            <input type="text" class="form-control" pInputText>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Departamento expedicion</span>
+                            <input type="text" class="form-control" pInputText>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Ciudad de expedicion</span>
+                            <input type="text" class="form-control" pInputText>
+                        </div>
+                    </div>
+                </form>
+            </p-tabPanel>
+            <p-tabPanel header="Informacion Personal" [selected]="select4" [disabled]="true">
+                <form>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Situacion laboral</span>
+                            <input type="text" class="form-control" pInputText>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Tipo de contrato</span>
+                            <input type="text" class="form-control" pInputText>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Empresa donde labora</span>
+                            <input type="text" class="form-control" pInputText>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Direccion de la empresa</span>
+                            <input type="text" class="form-control" pInputText>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Ocupacion</span>
+                            <input type="text" class="form-control" pInputText>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Telefono de la empresa</span>
+                            <input type="text" class="form-control" pInputText>
+                        </div>
+                    </div>
+                </form>
+            </p-tabPanel>
+            <p-tabPanel header="Informacion Personal" [selected]="select5" [disabled]="true">
+                <form>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Tipo de vivienda</span>
+                            <input type="text" class="form-control" pInputText>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Tiempo en vivienda</span>
+                            <input type="text" class="form-control" pInputText>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Direccion</span>
+                            <input type="text" class="form-control" pInputText>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Departamento</span>
+                            <input type="text" class="form-control" pInputText>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Ciudad</span>
+                            <input type="text" class="form-control" pInputText>
+                        </div>
+                    </div>
+                </form>
+            </p-tabPanel>
+            <p-tabPanel header="Referencias" [selected]="select6" [disabled]="true">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>Referencia Familiar</h2>
+                    </div>
+                    <div class="col-md-6">
+                        <form>
+                            <div class="mb-3">
+                                <div class="col-md-9">
+                                    <span>Nombre</span>
+                                    <input type="text" class="form-control" pInputText>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="col-md-9">
+                                    <span>Apellido</span>
+                                    <input type="text" class="form-control" pInputText>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="col-md-9">
+                                    <span>Parentesco</span>
+                                    <input type="text" class="form-control" pInputText>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="col-md-9">
+                                    <span>Numero telefonico</span>
+                                    <input type="text" class="form-control" pInputText>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-6">
+                        <form>
+                            <div class="mb-3">
+                                <div class="col-md-9">
+                                    <span>Nombre</span>
+                                    <input type="text" class="form-control" pInputText>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="col-md-9">
+                                    <span>Apellido</span>
+                                    <input type="text" class="form-control" pInputText>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="col-md-9">
+                                    <span>Parentesco</span>
+                                    <input type="text" class="form-control" pInputText>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="col-md-9">
+                                    <span>Numero telefonico</span>
+                                    <input type="text" class="form-control" pInputText>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>Referencia Personal</h2>
+                    </div>
+                    <div class="col-md-6">
+                        <form>
+                            <div class="mb-3">
+                                <div class="col-md-9">
+                                    <span>Nombre</span>
+                                    <input type="text" class="form-control" pInputText>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="col-md-9">
+                                    <span>Apellido</span>
+                                    <input type="text" class="form-control" pInputText>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="col-md-9">
+                                    <span>Numero telefonico</span>
+                                    <input type="text" class="form-control" pInputText>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-6">
+                        <form>
+                            <div class="mb-3">
+                                <div class="col-md-9">
+                                    <span>Nombre</span>
+                                    <input type="text" class="form-control" pInputText>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="col-md-9">
+                                    <span>Apellido</span>
+                                    <input type="text" class="form-control" pInputText>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="col-md-9">
+                                    <span>Numero telefonico</span>
+                                    <input type="text" class="form-control" pInputText>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </p-tabPanel>
+            <p-tabPanel header="Informacion Bancaria" [selected]="select7" [disabled]="true">
+                <form>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Numero de cuenta</span>
+                            <input type="text" class="form-control" pInputText>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Banco</span>
+                            <input type="text" class="form-control" pInputText>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col-md-9">
+                            <span>Tipo de cuenta</span>
+                            <input type="text" class="form-control" pInputText>
+                        </div>
+                    </div>
+                </form>
+            </p-tabPanel>
+        </p-tabView>
+        
+    </p-fieldset>
+</div>

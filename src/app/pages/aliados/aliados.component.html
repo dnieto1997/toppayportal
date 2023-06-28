@@ -1,0 +1,93 @@
+<app-navbar></app-navbar>
+<br>
+<p-fieldset legend="Aliados" >
+    
+    <button class="btn btn-primary" (click)="showDialog()">
+        <i class="pi pi-plus"></i> 
+        Crear
+    </button>
+
+    <hr>
+
+    <div class="table-responsive">
+
+        <p-table [value]="aliados" styleClass="p-datatable-gridlines" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" 
+        [rowsPerPageOptions]="[10,25,50]" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+        [scrollable]="true" scrollHeight="400px">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
+                    <th pSortableColumn="merchant">merchant <p-sortIcon field="merchant"></p-sortIcon></th>
+                    <th pSortableColumn="email">email <p-sortIcon field="email"></p-sortIcon></th>
+                    <th pSortableColumn="pais">pais <p-sortIcon field="pais"></p-sortIcon></th>
+                    <th pSortableColumn="status">status <p-sortIcon field="status"></p-sortIcon></th>
+                    <th>Accion</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-data let-ri="rowIndex">
+                <tr>
+                    <td>
+                        {{data.id}}
+                    </td>
+                    <td>
+                        {{data.merchant}}
+                    </td>
+                    <td>
+                        {{data.email}}
+                    </td>
+                    <td>
+                        {{mostrarPais(data.pais)}}
+                    </td>
+                    <td>
+                        {{estados(data.status)}}
+                    </td>
+                    <td style="text-align:center">
+                        <button  pButton pRipple type="button"  icon="pi pi-pencil" (click)="onRowEditInit(data)" class="p-button-rounded p-button-text"></button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+                <div class="flex align-items-center justify-content-between">
+                    In total there are {{aliados ? aliados.length : 0 }} aliados.
+                </div>
+            </ng-template>
+        </p-table>
+
+    </div>
+    
+
+    <p-dialog header="Crear Aliado" [(visible)]="display" [style]="{width: '50vw'}">
+        <div class="row">
+            <div class="col-md-12 text-start">
+                <span>Merchant</span><br>
+                <input type="text" class="form-control" placeholder="Merchant"  name ="merchant" [(ngModel)]="merchant">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12 text-start">
+                <span>Email</span><br>
+                <input type="email" class="form-control" placeholder="email"  name ="email" [(ngModel)]="email">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12 text-start">
+                <span>Pais</span><br>
+                <select name="pais" class="form-control"  [(ngModel)]="pais">
+                    <option *ngFor="let tipo of arrPais" value="{{tipo.id}}" >{{tipo.descripcion}}</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12 text-start">
+                <button class="btn btn-primary" (click)="guardar()">
+                    <i class="pi pi-plus"></i> 
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </p-dialog>
+
+</p-fieldset>

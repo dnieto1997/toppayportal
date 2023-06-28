@@ -1,0 +1,109 @@
+<app-navbar></app-navbar>
+<div class="container-fluid">
+    <br>
+    <p-fieldset legend="Payout register" >
+
+        <div class="row">
+            <div class="col-md-12">
+                <p-messages [(value)]="valorPayout"></p-messages>
+            </div>
+            <div class="col-md-6">
+                <span>Aliados</span>
+               <!--  <select name="aliado" class="form-control"  [(ngModel)]="aliado" (focus)="verAliados()" (change)="verCuentas($event.target)">
+                    <option *ngFor="let al of aliadosAr" value="{{al.id}}" >{{al.merchant}}</option>
+                </select> -->
+                <br>
+                <p-dropdown 
+                    [options]="aliadosAr" 
+                    [(ngModel)]="aliado" 
+                    placeholder="Select a Aliados" 
+                    optionLabel="name" 
+                    [showClear]="true"
+                    [filter]="true"
+                     filterBy="name"
+                     (onChange)="verCuentas($event.value)">
+                    <ng-template pTemplate="selectedItem">
+                        <div class="country-item country-item-value" *ngIf="aliado">
+                            <div>{{aliado.name}}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-country pTemplate="item">
+                        <div class="country-item">
+                            <div>{{country.name}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+
+
+            </div>
+            <div class="col-md-6">
+                <span>Cuenta de origen</span>
+                <br>
+               <!--  <select name="cuenta" class="form-control"  [(ngModel)]="cuenta" (change)="verCuentas2($event.target)">
+                    <option *ngFor="let cue of cuentasAr" value="{{cue.uid}}" >{{cue.alias}} ( {{cue.num_account}} )</option>
+                    <option value="0" >Banco externo</option>
+                </select> -->
+                <p-dropdown 
+                    [options]="cuentasAr" 
+                    [(ngModel)]="cuenta" 
+                    placeholder="Select a Cuenta origen" 
+                    optionLabel="name" 
+                    [showClear]="true"
+                    [filter]="true"
+                     filterBy="name"
+                     (onChange)="verCuentas2($event.value)">
+                    <ng-template pTemplate="selectedItem">
+                        <div class="country-item country-item-value" *ngIf="cuenta">
+                            <div>{{cuenta.name}}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-country pTemplate="item">
+                        <div class="country-item">
+                            <div>{{country.name}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+            <div class="col-md-12">
+                <p-messages [(value)]="valorCuentatext"></p-messages>
+               <!--  <div class="alert alert-primary" role="alert">
+                    {{valorCuentatext}}
+                </div> -->
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <span>Tipo de cuenta</span>
+                <input type="text" class="form-control"  [(ngModel)]="tipoCuenta" [disabled]="estadoUnput" pInputText >
+            </div>
+            <div class="col-md-6">
+                <span>Banco</span>
+                <input type="text" class="form-control"  [(ngModel)]="banco" [disabled]="estadoUnput" pInputText >
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <span>Numero de cuenta</span>
+                <input type="text" class="form-control" [(ngModel)]="numeroCuenta" [disabled]="estadoUnput" pInputText >
+            </div>
+            <div class="col-md-6">
+                <span>Valor</span>
+                <br>
+               <!--  <input type="number" class="form-control" [(ngModel)]="valor" pInputText > -->
+                <p-inputNumber [(ngModel)]="valor" styleClass="input-styling"></p-inputNumber>
+                   
+            </div>
+        </div>
+        <hr>
+        <p-button label="Guardar" icon="pi pi-search" (click)="guardar()"></p-button>
+
+    </p-fieldset>
+</div>
+   
+
+
+
+
+

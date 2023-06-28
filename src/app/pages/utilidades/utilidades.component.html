@@ -1,0 +1,106 @@
+<app-navbar></app-navbar>
+<div class="container-fluid">
+    <br>
+    <p-fieldset legend="Utilidades" >
+        
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <tr>
+                    <td>
+                        <input type="date" class="form-control" [(ngModel)]="fech1">
+                    </td>
+                    <td>
+                        <input type="date" class="form-control" [(ngModel)]="fech2">
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button class="btn btn-dark" (click)="llamarTabla()">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                Buscar
+            </button>
+            <button class="btn btn-danger" (click)="Limpiar()">
+                <i class="fa fa-filter" aria-hidden="true"></i>
+                Limpiar
+            </button>
+        </div>
+        <hr>
+
+        <div class="table-responsive">
+
+            <p-table #dt [value]="table" dataKey="merchant_id" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"  [tableStyle]="{'min-width': '50rem'}" 
+            [globalFilterFields]="['fecha','cliente','transacciones','sumatoria','utilidad','total','payin','payout']" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+            scrollHeight="600px">
+        
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="fecha">MES <p-sortIcon field="fecha"></p-sortIcon></th>
+                        <th pSortableColumn="cliente">CLIENTE <p-sortIcon field="cliente"></p-sortIcon></th>
+                        <th pSortableColumn="transacciones">TRANSACCIONES <p-sortIcon field="transacciones"></p-sortIcon></th>
+                        <th pSortableColumn="sumatoria">SUMATORIA<p-sortIcon field="sumatoria"></p-sortIcon></th>
+                        <th pSortableColumn="utilidad">UTILIDAD<p-sortIcon field="utilidad"></p-sortIcon></th>
+                        <th pSortableColumn="total">TOTAL<p-sortIcon field="total"></p-sortIcon></th>
+                        <th pSortableColumn="payin">PAY-IN<p-sortIcon field="payin"></p-sortIcon></th>
+                        <th pSortableColumn="payout">PAY-OUT<p-sortIcon field="payout"></p-sortIcon></th>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-info >
+                    <tr>
+                        <td>
+                            <p>
+                                {{ FormatoFecha(info.fecha) }}
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                {{info.cliente}}
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                {{info.transacciones}}
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                {{info.sumatoria | number}}
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                {{info.utilidad | number}}
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                <strong>{{info.total | number }}</strong>
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                <strong class="text-success">{{info.payin | number}}</strong>
+                                <br>
+                                <strong>({{info.payincount | number}})</strong>
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                <strong class="text-danger">{{info.payout | number}}</strong>
+                                <br>
+                                <strong>({{info.payoutcount | number}})</strong>
+                            </p>
+                        </td>
+                    </tr>
+                </ng-template>
+                
+                <ng-template pTemplate="summary">
+                    There are {{table?.length}} table
+                </ng-template>
+            </p-table>
+        </div>
+       
+    </p-fieldset>
+</div>

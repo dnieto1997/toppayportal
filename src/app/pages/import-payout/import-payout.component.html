@@ -1,0 +1,120 @@
+<app-navbar></app-navbar>
+<div class="container-fluid">
+    <br>
+    <p-fieldset legend="Importar Out/In" >
+        
+        <button class="btn btn-warning" [routerLink]="'/payout'"><i class="pi pi-arrow-left"></i> Volver</button>
+        <br>
+        <div class="mb-3">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4 text-center">
+                    <span>Seleccione el archivo de excel</span><br>
+                    <input type="file" name="file" class="form-control" id="inputGroupFile" required (change)="handleImport($event)"
+                        accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4 text-center">
+                    <button pButton type="button" icon="pi pi-plus" label="Guardar" (click)="cambiar()"></button>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+          
+        </div>
+
+        <hr>
+        <button pButton type="button" icon="pi pi-cloud-upload" label="Notificar Todo" (click)="cambiarTodo()"></button>
+        <hr>
+        <p-table #dt [value]="table" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"  [tableStyle]="{'min-width': '50rem'}" 
+        [globalFilterFields]="['id','user_name','reference','user_doc']" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+        scrollHeight="600px">
+    
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="id">id <p-sortIcon field="id"></p-sortIcon></th>
+                    <th pSortableColumn="reference">reference <p-sortIcon field="reference"></p-sortIcon></th>
+                    <th pSortableColumn="status">status <p-sortIcon field="status"></p-sortIcon></th>
+                    <th pSortableColumn="usuario">usuario <p-sortIcon field="usuario"></p-sortIcon></th>
+                    <th pSortableColumn="msg">msg <p-sortIcon field="msg"></p-sortIcon></th>
+                    <th pSortableColumn="fecha">fecha <p-sortIcon field="fecha"></p-sortIcon></th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'id')"  placeholder="id" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'reference')"  placeholder="reference" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'status')"  placeholder="status" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'usuario')"  placeholder="usuario" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'msg')"  placeholder="msg" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'fecha')"  placeholder="fecha" class="w-full">
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-info>
+                <tr>
+                    <td><p>{{info.id}}</p></td>
+                    <td><p>{{info.reference}}</p></td>
+                    <td><p>{{info.status}}</p></td>
+                    <td><p>{{info.usuario}}</p></td>
+                    <td><p>{{info.msg}}</p></td>
+                    <td><p>{{info.fecha}}</p></td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-success" title="Notificar" (click)="notificar(info.id,info.status,info.reference)"><i class="pi pi-cloud-upload" aria-hidden="true"></i></button>
+                            <button type="button" class="btn btn-primary" title="Editar" (click)="editar(info)"><i class="pi pi-file-edit" aria-hidden="true"></i></button>
+                            <button type="button" class="btn btn-danger" title="Eliminar" (click)="eliminar(info.id,info.status,info.reference)"><i class="pi pi-trash" aria-hidden="true"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+            
+            <ng-template pTemplate="summary">
+                There are {{table?.length}} table
+            </ng-template>
+        </p-table>
+
+        <p-dialog header="Editar" [(visible)]="display" [style]="{width: '50vw'}">
+           
+            <div class="row">
+                <div class="col-md-12 text-start">
+                    <span>Status</span><br>
+                    <input type="hidden" [(ngModel)]="inputReference">
+                    <select name="status" class="form-control" [(ngModel)]="inputStatus">
+                        <option value="1">Success</option>
+                        <option value="3">Declined</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-start">
+                    <span>Motivo</span><br>
+                    <textarea name="motivo" class="form-control" rows="6" [(ngModel)]="inputMotivo"></textarea>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12 text-start">
+                    <button class="btn btn-primary" (click)="guardarEdi()">
+                        <i class="pi pi-plus"></i> 
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </p-dialog>
+
+    </p-fieldset>
+</div>

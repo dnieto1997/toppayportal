@@ -1,0 +1,64 @@
+<app-navbar></app-navbar>
+<div class="container-fluid">
+    <br>
+    <p-fieldset legend="Movimientos realizados" >
+        
+        <button class="btn btn-warning" [routerLink]="'/payout'"><i class="pi pi-arrow-left"></i> Volver</button>
+        <br>
+        <div class="mb-3">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4 text-center">
+                    <span>Seleccione el archivo de excel</span><br>
+                    <input type="file" name="file" class="form-control" id="inputGroupFile" required (change)="handleImport($event)"
+                        accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4 text-center">
+                    <button pButton type="button" icon="pi pi-plus" label="Buscar" (click)="cambiar()"></button>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+          
+        </div>
+
+        <hr>
+       
+        <p-table #dt [value]="table" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"  [tableStyle]="{'min-width': '50rem'}" 
+        [globalFilterFields]="['id','user_name','reference','user_doc']" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+        scrollHeight="600px">
+            <ng-template pTemplate="caption">
+                <div class="flex">
+                    <button type="button" pButton pRipple icon="pi pi-file" (click)="exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="id">id <p-sortIcon field="id"></p-sortIcon></th>
+                    <th pSortableColumn="reference">reference <p-sortIcon field="reference"></p-sortIcon></th>
+                    <th pSortableColumn="merchant_name">merchant_name <p-sortIcon field="merchant_name"></p-sortIcon></th>
+                    <th pSortableColumn="amount">amount <p-sortIcon field="amount"></p-sortIcon></th>
+                    <th pSortableColumn="status">status <p-sortIcon field="status"></p-sortIcon></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-info>
+                <tr>
+                    <td><p>{{info.id}}</p></td>
+                    <td><p>{{info.reference}}</p></td>
+                    <td><p>{{info.merchant_name}}</p></td>
+                    <td><p>{{info.amount | number}}</p></td>
+                    <td><p>{{info.status}}</p></td>
+                </tr>
+            </ng-template>
+            
+            <ng-template pTemplate="summary">
+                There are {{table?.length}} table
+            </ng-template>
+        </p-table>
+
+    </p-fieldset>
+</div>

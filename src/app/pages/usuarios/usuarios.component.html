@@ -1,0 +1,153 @@
+<app-navbar></app-navbar>
+<div class="container-fluid">
+    <br>
+    <p-fieldset legend="Users" >
+        
+        <button class="btn btn-primary" (click)="showDialog()">
+            <i class="pi pi-plus"></i> 
+            Crear
+        </button>
+        <hr>
+
+        <div class="table-responsive">
+
+            <p-table [value]="users" styleClass="p-datatable-gridlines" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" 
+            [rowsPerPageOptions]="[10,25,50]" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+            [scrollable]="true" scrollHeight="400px">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
+                        <th pSortableColumn="log_merchantid">Merchant Id <p-sortIcon field="log_merchantid"></p-sortIcon></th>
+                        <th pSortableColumn="log_usuario">User <p-sortIcon field="log_usuario"></p-sortIcon></th>
+                        <th pSortableColumn="log_tipo">Rol <p-sortIcon field="log_tipo"></p-sortIcon></th>
+                        <th pSortableColumn="pais">Pais <p-sortIcon field="pais"></p-sortIcon></th>
+                        <th pSortableColumn="log_estado">Status <p-sortIcon field="log_estado"></p-sortIcon></th>
+                        <th>Accion</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-user let-ri="rowIndex">
+                    <tr>
+                        <td>
+                            {{user.id}}
+                        </td>
+                        <td>
+                            {{user.merchant}}
+                        </td>
+                        <td>
+                            {{user.log_usuario}}
+                        </td>
+                        <td>
+                            {{user.rol}}
+                        </td>
+                        <td>
+                            {{user.pais}}
+                        </td>
+                        <td>
+                            {{user.estado}}
+                        </td>
+                        <td style="text-align:center">
+                            <button  pButton pRipple type="button"  icon="pi pi-pencil" (click)="onRowEditInit(user)" class="p-button-rounded p-button-text"></button>
+                            <button  pButton pRipple type="button"  icon="pi pi-unlock" (click)="cambiarPass(user)" class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
+                            <button  pButton pRipple type="button"  icon="pi pi-times" (click)="onRowEditCancel(user, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="flex align-items-center justify-content-between">
+                        In total there are {{users ? users.length : 0 }} Users.
+                    </div>
+                </ng-template>
+            </p-table>
+
+        </div>
+        
+
+        <p-dialog header="Crear Usuario" [(visible)]="display" [style]="{width: '50vw'}">
+            <div class="row">
+                <div class="col-md-12 text-start">
+                    <span>Merchant Id</span><br>
+                    <input type="number" class="form-control" placeholder="Merchant Id"  name ="log_merchantid" [(ngModel)]="log_merchantid">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12 text-start">
+                    <span>Usuario</span><br>
+                    <input type="text" class="form-control" placeholder="Usuario"  name ="log_usuario" [(ngModel)]="log_usuario">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12 text-start">
+                    <span>Tipo</span><br>
+                    <select name="log_tipo" class="form-control"  [(ngModel)]="log_tipo">
+                        <option *ngFor="let tipo of arrtipo" value="{{tipo.descripcion}}" >{{tipo.nombre}}</option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12 text-start">
+                    <span>Pais</span><br>
+                    <select name="log_pais" class="form-control"  [(ngModel)]="log_pais">
+                        <option *ngFor="let pais of arrpais" value="{{pais.id}}" >{{pais.nombre}}</option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12 text-start">
+                    <button class="btn btn-primary" (click)="guardar()">
+                        <i class="pi pi-plus"></i> 
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </p-dialog>
+
+        <p-dialog header="Editar Usuario" [(visible)]="display2" [style]="{width: '50vw'}">
+            <div class="row">
+                <div class="col-md-12 text-start">
+                    <span>Merchant Id</span><br>
+                    <input type="hidden" class="form-control" placeholder="Merchant Id"  name ="log_merchantid" [(ngModel)]="log_id2">
+                    <input type="number" class="form-control" placeholder="Merchant Id"  name ="log_merchantid" [(ngModel)]="log_merchantid2">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12 text-start">
+                    <span>Usuario</span><br>
+                    <input type="text" class="form-control" placeholder="Usuario"  name ="log_usuario" [(ngModel)]="log_usuario2">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12 text-start">
+                    <span>Tipo</span><br>
+                    <select name="log_tipo" class="form-control"  [(ngModel)]="log_tipo2">
+                        <option *ngFor="let tipo of arrtipo" value="{{tipo.descripcion}}" >{{tipo.nombre}}</option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12 text-start">
+                    <span>Pais</span><br>
+                    <select name="log_pais" class="form-control"  [(ngModel)]="log_pais2">
+                        <option *ngFor="let pais of arrpais" value="{{pais.id}}" >{{pais.nombre}}</option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12 text-start">
+                    <button class="btn btn-primary" (click)="editar()">
+                        <i class="pi pi-plus"></i> 
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </p-dialog>
+       
+    </p-fieldset>
+</div>

@@ -1,0 +1,61 @@
+<app-navbar></app-navbar>
+<div class="container-fluid">
+    <br>
+    <p-fieldset legend="Perfil" >
+        
+        <table class="table table-striped table-bordered " *ngFor="let l of list">
+            <tr>
+                <td class="text-center" colspan ="2">
+                   <img src="{{l.image}}" alt="Img Logo" class="imgLogo">
+                </td>
+            </tr>
+            <tr>
+                <td colspan ="2">
+                    <h2 class="text-center text-primary">{{l.merchant}}</h2>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <p class="text-and text-primary">Billeteras (Porcentaje)</p>
+                </th>
+                <td>
+                    <p class="text-and">{{l.nequi_porcentaje}}</p>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <p class="text-and text-primary">Billeteras (Fijo)</p>
+                </th>
+                <td>
+                    <p class="text-and">{{l.nequi_fijo}}</p>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <p class="text-and text-primary">PSE (Porcentaje)</p>
+                </th>
+                <td>
+                    <p class="text-and">{{l.pse_porcentaje}}</p>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <p class="text-and text-primary">PSE (Fijo)</p>
+                </th>
+                <td>
+                    <p class="text-and">{{l.pse_fijo}}</p>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <p class="text-and text-primary">Cash Out</p>
+                </th>
+                <td>
+                    <p class="text-and">{{l.cashout}}</p>
+                </td>
+            </tr>
+        </table>
+        
+    </p-fieldset>
+</div>
+

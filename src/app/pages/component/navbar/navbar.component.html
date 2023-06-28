@@ -1,0 +1,29 @@
+<p-menubar  styleClass="menucus">
+    <ng-template pTemplate="start" >
+        <img src="assets/logo.png" height="40" class="mr-2" (click)="display = true">
+        &nbsp; &nbsp;
+        <img src="assets/nombre.png" height="30" class="mr-2">
+    </ng-template>
+    <ng-template pTemplate="end">
+ 
+        <span class="p-buttonset">
+            <button pButton class="btn-color" type="button" (click)="display = true" icon="pi pi-align-justify" label="Menu" tilte="Menu"></button>
+            <button pButton class="p-button-danger" type="button" (click)="logout()" icon="pi pi-sign-out" label="Logout" tilte="Logout"></button>
+        </span>
+    </ng-template>
+</p-menubar>
+<p-sidebar classStyle="background-color: red;" [(visible)]="display" >
+    <p>Menu</p>
+    <p-menu [model]="Menu.items"></p-menu>
+</p-sidebar>
+
+<div class="row"  *ngIf=" usuariosPais( Menu.nomUsuario ) == true  ">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <select name="miPais" class="form-control" [(ngModel)]="Menu.pais" (change)="handleImport($event)">
+            <option value="1">Colombia</option>
+            <option value="2">Peru</option>
+        </select>
+    </div>
+    <div class="col-md-4"></div>
+</div>

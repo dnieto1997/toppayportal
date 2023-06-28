@@ -1,0 +1,194 @@
+<app-navbar></app-navbar>
+<div class="container-fluid">
+    <br>
+    <p-fieldset legend="Dispersiones" >
+        
+        <button class="btn btn-primary" (click)="showDialog()">
+            <i class="pi pi-plus"></i> 
+            Crear
+        </button>
+        <hr>
+        <div class="table-responsive">
+
+            <p-table #dt [value]="arrDisperciones" styleClass="p-datatable-gridlines" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" 
+            [rowsPerPageOptions]="[10,25,50]" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+            [scrollable]="true" scrollHeight="600px">
+
+                <ng-template pTemplate="caption">
+                    <div class="flex">
+                        <button type="button" pButton pRipple icon="pi pi-file" (click)="exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+                    </div>
+                </ng-template>
+                
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
+                        <th pSortableColumn="merchant">merchant<p-sortIcon field="merchant"></p-sortIcon></th>
+                        <th pSortableColumn="banco">Banco <p-sortIcon field="banco"></p-sortIcon></th>
+                        <th pSortableColumn="cuenta">Cuenta <p-sortIcon field="cuenta"></p-sortIcon></th>
+                        <th pSortableColumn="valor">Valor <p-sortIcon field="valor"></p-sortIcon></th>
+                        <th pSortableColumn="gmf">Gmf <p-sortIcon field="gmf"></p-sortIcon></th>
+                        <th pSortableColumn="tipo">Tipo <p-sortIcon field="tipo"></p-sortIcon></th>
+                        <th pSortableColumn="paisn">Pais <p-sortIcon field="paisn"></p-sortIcon></th>
+                        <th pSortableColumn="fechapago">Fecha de pago <p-sortIcon field="fechapago"></p-sortIcon></th>
+                        <th>Accion</th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'id')"  placeholder="ID" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'nomaliado')"  placeholder="Merchant" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'bancoaliado')"  placeholder="Banco" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'vuenta')"  placeholder="Vuenta" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'valor')"  placeholder="Valor" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'gmf')"  placeholder="gmf" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'tipoaliado')"  placeholder="Tipo" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'paisn')"  placeholder="Pais" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'tipoaliado')"  placeholder="Tipo" class="w-full">
+                        </th>
+                        <th>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-user  let-ri="rowIndex">
+                    <tr>
+                        <td>
+                            <p>{{user.id}}</p>
+                        </td>
+                        <td>
+                            <p> {{user.nomaliado}}</p>
+                        </td>
+                        <td>
+                           <p>{{user.bancoaliado}}</p>
+                        </td>
+                        <td>
+                            <p>{{user.cuenta}}</p>
+                        </td>
+                        <td>
+                            <p>{{user.valor | number}}</p>
+                        </td>
+                        <td>
+                            <p>{{user.gmf | number}}</p>
+                        </td>
+                        <td>
+                            <p>{{user.tipoaliado}}</p>
+                        </td>
+                        <td>
+                            <p>{{user.paisn}}</p>
+                        </td>
+                        <td>
+                            <p>{{user.fechapago}}</p>
+                        </td>
+                        <td style="text-align:center">
+                            <button  pButton pRipple type="button"  icon="pi pi-file-edit" (click)="editar(user, ri)" class="p-button-rounded p-button-text p-button-success"></button>
+                            <button  pButton pRipple type="button"  icon="pi pi-times" (click)="onRowEditCancel(user, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="flex align-items-center justify-content-between">
+                        In total there are {{arrDisperciones ? arrDisperciones.length : 0 }} Disperciones.
+                    </div>
+                </ng-template>
+            </p-table>
+
+        </div>
+
+        <p-dialog header="Crear Dispersione" [(visible)]="display" [style]="{width: '50vw'}">
+            <div class="row">
+                <div class="col-md-12 text-start">
+                    <span>Merchant</span><br>
+                    <select name="log_tipo" class="form-control"  [(ngModel)]="merchant" (change)="saverange($event)">
+                        <option *ngFor="let tipo of arrmerchant" value="{{tipo.id}}" >{{tipo.merchant}}</option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12 text-start">
+                    <span>Banco</span><br>
+                    <select name="banco" class="form-control"  [(ngModel)]="banco" (change)="saverange2($event)">
+                        <option *ngFor="let tipo of arrbanco" value="{{tipo.id}}" >{{tipo.nombre}}</option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12 text-start">
+                    <span>Cuenta</span><br>
+                    <input type="text" class="form-control" placeholder="Cuenta"  name ="cuenta" [(ngModel)]="cuenta">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12 text-start">
+                    <span>Valor</span><br>
+                    <p-inputNumber [(ngModel)]="valor" styleClass="input-styling" placeholder="Valor"></p-inputNumber>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12 text-start">
+                    <span>Gmf</span><br>
+                    <p-inputNumber [(ngModel)]="gmf" styleClass="input-styling" placeholder="Gmf"></p-inputNumber>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12 text-start">
+                    <span>Tipo</span><br>
+                  
+                    <select name="tipo" class="form-control"  [(ngModel)]="tipo">
+                        <option value="S" >SALIDA DE DINERO</option>
+                        <option value="E" >ENTRADA DE DINERO</option>
+                    </select>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12 text-start">
+                    <button class="btn btn-primary" (click)="guardar()">
+                        <i class="pi pi-plus"></i> 
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </p-dialog>
+
+        <p-dialog header="Editar Gmf" [(visible)]="display2" [style]="{width: '50vw'}">
+            
+            <div class="row">
+                <div class="col-md-12 text-start">
+                    <span>Gmf</span><br>
+                    <input type="hidden" [(ngModel)]="idgmf">
+                    <p-inputNumber [(ngModel)]="valorgmf" styleClass="input-styling" placeholder="Gmf"></p-inputNumber>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12 text-start">
+                    <button class="btn btn-primary" (click)="guardarGmf()">
+                        <i class="pi pi-plus"></i> 
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </p-dialog>
+
+    </p-fieldset>
+</div>

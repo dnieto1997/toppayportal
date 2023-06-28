@@ -1,0 +1,42 @@
+::ng-deep .menucus {
+    background: #FFFFFF;
+}
+
+::ng-deep .menucus ul li:nth-child(1) {
+    background: #f3f3f5;
+}
+
+::ng-deep .menucus ul li .p-menubar {
+    color: #FFFFFF;
+}
+
+::ng-deep .p-sidebar-left{
+    background:rgba(78,45,135,1);
+    
+    p{
+        font-size: 35px; 
+        color: #FFFFFF;
+    }
+    span{
+        color: #FFFFFF;
+    }
+
+}
+
+::ng-deep .p-menu {
+    background: rgba(78,45,135,1);
+    border: 1px solid #FFFFFF;
+    width: 100%;
+    border-radius: 10px;
+}
+
+::ng-deep .p-menu .p-menuitem-link .p-menuitem-text{
+    color: #FFFFFF;
+   /*  background: #443ea2; */
+    font-size: 20px;
+}
+
+::ng-deep .p-menu .p-menuitem-link .p-menuitem-icon{
+    color: #FFFFFF;
+    /* background: #443ea2; */
+}

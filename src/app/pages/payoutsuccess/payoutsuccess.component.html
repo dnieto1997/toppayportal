@@ -1,0 +1,202 @@
+<app-navbar></app-navbar>
+<div class="container-fluid">
+    <br>
+    <p-fieldset legend="Pay Out (Success)" >
+        <button class="btn btn-warning" [routerLink]="'/payout'"><i class="pi pi-arrow-left"></i> Volver</button>
+        <hr>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <tr>
+                    <td><strong>Fecha Inicial</strong></td>
+                    <td><strong>Fecha Final</strong></td>
+                    <td><strong>Aliado</strong></td>
+                    <td><strong>Estado</strong></td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="date" class="form-control" [(ngModel)]="fech1">
+                    </td>
+                    <td>
+                        <input type="date" class="form-control" [(ngModel)]="fech2">
+                    </td>
+                    <td>
+                        <select name="aliado" class="form-control"  [(ngModel)]="aliado">
+                            <option *ngFor="let al of aliados" value="{{al.id}}" >{{al.merchant}}</option>
+                        </select>
+                    </td>
+                    <td >
+                        <select name="aliado" class="form-control"  [(ngModel)]="estado">
+                            <option value="1" >Success</option>
+                            <option value="3" >Declined</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button class="btn btn-dark" (click)="Buscar()">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                Buscar
+            </button>
+            <button class="btn btn-danger" (click)="Limpiar()">
+                <i class="fa fa-filter" aria-hidden="true"></i>
+                Limpiar
+            </button>
+        </div>
+        <hr>
+
+        <h2>total: {{recaudoTotal | number}}</h2>
+        <br>
+        <div class="row">
+            <div class="col-12">
+                <p-messages [(value)]="valorPayout"></p-messages>
+            </div>
+        </div>
+
+
+        <p-table #dt [value]="table" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"  [tableStyle]="{'min-width': '50rem'}" 
+        [globalFilterFields]="['id','user_name','reference','user_doc']" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+        scrollHeight="600px">
+    
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <button type="button" pButton pRipple icon="pi pi-file" (click)="exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+            </div>
+        </ng-template>
+    
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="uid">ID <p-sortIcon field="uid"></p-sortIcon></th>
+                    <th pSortableColumn="reference" >Reference <p-sortIcon field="reference"></p-sortIcon></th>
+                    <th pSortableColumn="user_doc" >user_doc <p-sortIcon field="user_doc"></p-sortIcon></th>
+                    <th pSortableColumn="user_name" >user_name <p-sortIcon field="user_name"></p-sortIcon></th>
+                    <th pSortableColumn="merchant_name" >Merchant_name <p-sortIcon field="merchant_name"></p-sortIcon></th>
+                    <th pSortableColumn="user_bank" >user_bank <p-sortIcon field="user_bank"></p-sortIcon></th>
+                    <th pSortableColumn="user_type_account" >user_type_account <p-sortIcon field="user_type_account"></p-sortIcon></th>
+                    <th pSortableColumn="amount" >amount <p-sortIcon field="amount"></p-sortIcon></th>
+                    <th pSortableColumn="cost" >cost <p-sortIcon field="cost"></p-sortIcon></th>
+                    <th pSortableColumn="iva" >iva <p-sortIcon field="iva"></p-sortIcon></th> 
+                    <th pSortableColumn="fechac" >Fecha creada <p-sortIcon field="fecha"></p-sortIcon></th>
+                    <th pSortableColumn="fechau" >Fecha actualizacion <p-sortIcon field="fecha"></p-sortIcon></th>
+                    <th pSortableColumn="estados" >Estado <p-sortIcon field="estados"></p-sortIcon></th>
+                </tr>
+                <tr>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'uid')"  placeholder="Id" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'reference')"  placeholder="Reference" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'user_doc')"  placeholder="user_doc" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'user_name')"  placeholder="user_name" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'merchant_name')"  placeholder="merchant_name" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'user_bank')"  placeholder="user_bank" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'user_type_account')"  placeholder="user_type_account" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'amount')"  placeholder="amount" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'cost')"  placeholder="cost" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'iva')"  placeholder="iva" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'fechac')"  placeholder="fecha creacion" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'fechau')"  placeholder="fecha actualizacion" class="w-full">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="filter($event.target, 'estados')"  placeholder="estados" class="w-full">
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-info>
+                <tr>
+                    <td>
+                        <p>
+                            {{info.uid}}    
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            {{info.reference}}
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            {{info.user_doc}}   
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            {{info.user_name}}
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            {{info.merchant_name}}  
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            {{info.user_bank}}
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            {{info.user_type_account}}
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            {{info.amount}}
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            {{info.cost}}
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            {{info.iva}}
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            {{info.fechac}}
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            {{info.fechau}}
+                        </p>
+                    </td>
+                    <td>
+                        <p (click)="verMotivo(info.reference)" class="text-primary" style="cursor: pointer;">
+                           <u>{{info.estados}}</u>
+                        </p>
+                    </td>
+                </tr>
+            </ng-template>
+            
+            <ng-template pTemplate="summary">
+                There are {{table?.length}} table
+            </ng-template>
+        </p-table>
+    </p-fieldset>
+</div>
+   
+

@@ -1,0 +1,109 @@
+<app-navbar></app-navbar>
+<div class="container-fluid">
+    <br>
+    <p-fieldset legend="Dashboard" >
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="cardtwo">
+                    <div class="row">
+                        <div class="col-3 cuerpo1">
+                            <i class="fa fa-cog fa-5x" aria-hidden="true"></i>
+                        </div>
+                        <div class="col-9 cuerpo2">
+                            <h6>Today's Money <small>Cash in Success</small></h6>
+                            <h4 *ngFor="let ar of todayMoneyIn">{{ ar.total | number}} <strong class="text-success">{{ar.moneda}}</strong></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="cardtwo">
+                    <div class="row">
+                        <div class="col-3 cuerpo1">
+                            <i class="fa fa-money fa-5x" aria-hidden="true"></i>
+                        </div>
+                        <div class="col-9 cuerpo2">
+                            <h6>Today's Transaction <small>Cash In</small></h6>
+                            <h4  *ngFor="let ar of todayTransactionIn">{{ ar.total | number}} ({{ar.moneda}}) <strong class="text-success">Success</strong></h4>
+                            <h4  *ngFor="let ar of todayTransactionInf">{{ ar.total | number}} ({{ar.moneda}}) <strong class="text-danger">Pending</strong></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="cardtwo">
+                    <div class="row">
+                        <div class="col-3 cuerpo1">
+                            <i class="pi pi-cog" style="font-size: 5rem"></i>
+                        </div>
+                        <div class="col-9 cuerpo2">
+                            <h6>Today's Transaction <small>Cash Out</small></h6>
+                            <h4 *ngFor="let ar of todayMoneyOut">{{ ar.total | number}} <strong class="text-success">{{ar.moneda}}</strong></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="cardtwo">
+                    <div class="row">
+                        <div class="col-3 cuerpo1">
+                           <!--  <i class="fa fa-money fa-5x" aria-hidden="true"></i> -->
+                           <i class="pi pi-money-bill" style="font-size: 5rem"></i>
+                        </div>
+                        <div class="col-9 cuerpo2">
+                            <h6>Today's Transaction <small>Cash Out</small></h6>
+                            <h4 *ngFor="let ar of todayTransactionOut">{{ ar.total | number}} <strong class="text-success">{{ar.moneda}}</strong></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <tr>
+                    <td><strong>Fecha Inicial</strong></td>
+                    <td><strong>Fecha Final</strong></td>
+                
+                </tr>
+                <tr>
+                    <td>
+                        <input type="date" class="form-control" >
+                    </td>
+                    <td>
+                        <input type="date" class="form-control" >
+                    </td>
+                 
+                </tr>
+            </table>
+        </div>
+        
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button class="btn btn-dark" >
+                <i class="fa fa-search" aria-hidden="true"></i>
+                Buscar
+            </button>
+            <button class="btn btn-danger" >
+                <i class="fa fa-filter" aria-hidden="true"></i>
+                Limpiar
+            </button>
+        </div>
+        <hr>
+
+    <!--     <div class="row">
+            <div class="card" style="background: transparent;">
+                <h3 class="text-center">Cash In vs Cash Out</h3>
+                <br>
+                <div class="container">
+                    <p-chart type="line" [data]="basicData" [options]="basicOptions"></p-chart>
+                </div>
+            </div>
+        </div> -->
+        
+    </p-fieldset>
+</div>
+

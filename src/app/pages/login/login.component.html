@@ -1,0 +1,22 @@
+<div class="wrapper">
+  <div class="logo"> 
+      <img src="assets/logotop.png" alt="">
+  </div>
+  <div class="text-center mt-4 name">
+   <!--    Sign in -->
+  </div>
+  <form class="p-3 mt-3">
+      <div class="form-field d-flex align-items-center">
+          <!-- <span class="fa fa-sign-out"></span> -->
+          <input type="text" name="userName" id="userName" placeholder="Username"  name ="usuario" [(ngModel)]="usuario">
+      </div>
+      <div class="form-field d-flex align-items-center">
+          <!-- <span class="fa fa-users"></span> -->
+          <input type="password" name="password" id="pwd" placeholder="Password" name="pass" [(ngModel)]="pass">
+      </div>
+      <button class="btn mt-3" (click)="login()">Sign in</button>
+  </form>
+  <div class="text-center fs-6">
+      <!-- <a href="#">Forget password?</a> or <a href="#">Sign up</a> -->
+  </div>
+</div>

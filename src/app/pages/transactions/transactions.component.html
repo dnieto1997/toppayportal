@@ -1,0 +1,219 @@
+<app-navbar></app-navbar>
+
+<div class="container-fluid">
+    <br>
+    <p-fieldset legend="Transaction (Cash in)" >
+        
+        <div class="row">
+            <div class="col-md 3">
+                <strong>Fecha Inicial</strong>
+                <input type="date" class="form-control" [(ngModel)]="fech1">
+            </div>
+            <div class="col-md 3">
+                <strong>Fecha Final</strong>
+                <input type="date" class="form-control" [(ngModel)]="fech2">
+            </div>
+            <div class="col-md 3">
+                <strong>Reference</strong>
+                <input type="text" class="form-control" [(ngModel)]="reference">
+            </div>
+            <div class="col-md 3">
+                <strong>Id user</strong>
+                <p-dropdown [options]="aliados" [(ngModel)]="aliado" optionLabel="name" [filter]="true" filterBy="name"
+                    [showClear]="true" placeholder="Seleccione un Aliado" [style]="{'width':'100%'}">
+                    <ng-template pTemplate="selectedItem">
+                    <div class="country-item country-item-value" *ngIf="aliado">
+                        <div> {{aliado.name}}</div>
+                    </div>
+                    </ng-template>
+                        <ng-template let-country pTemplate="item" >
+                        <div class="country-item">
+                            <div>{{country.name}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+            <div class="col-md 3">
+                <strong>Status</strong>
+                <select name="aliado" class="form-control"  [(ngModel)]="status">
+                    <option value="1" class="text-success">Success</option>
+                    <option value="2" class="text-warning">Pending</option>
+                    <option value="3" class="text-danger">Declined</option>
+                </select>
+            </div>
+           
+        </div>
+        
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button class="btn btn-dark" (click)="Buscar()">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                Buscar
+            </button>
+            <button class="btn btn-danger" (click)="Limpiar()">
+                <i class="fa fa-filter" aria-hidden="true"></i>
+                Limpiar
+            </button>
+        </div>
+        <hr>
+        <h2>total: {{recaudoTotal | number}}</h2>
+        <div class="table-responsive">
+
+            <p-table #dt [value]="table" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true"  [tableStyle]="{'min-width': '50rem'}"     
+            [globalFilterFields]="['id','user_name','reference','user_doc']" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+            scrollHeight="600px">
+        
+            <ng-template pTemplate="caption">
+                <div class="flex">
+                    <button type="button" pButton pRipple icon="pi pi-file" (click)="exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+                </div>
+            </ng-template>
+        
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>ACCION</th>
+                        <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
+                        <th pSortableColumn="merchant_name">ALIADO <p-sortIcon field="merchant_name"></p-sortIcon></th>
+                        <th pSortableColumn="user_name">USER <p-sortIcon field="user_name"></p-sortIcon></th>
+                        <th pSortableColumn="reference">REFERENCE <p-sortIcon field="reference"></p-sortIcon></th>
+                        <th pSortableColumn="referencepro">REFERENCE PRO<p-sortIcon field="referencepro"></p-sortIcon></th>
+                        <th pSortableColumn="referencepro2">REFERENCE PRO 2<p-sortIcon field="referencepro2"></p-sortIcon></th>
+                        <th pSortableColumn="user_doc">ID USER <p-sortIcon field="user_doc"></p-sortIcon></th>
+                        <th pSortableColumn="user_phone">USER PHONE <p-sortIcon field="user_phone"></p-sortIcon></th>
+                        <th pSortableColumn="method">FORMA PAGO <p-sortIcon field="method"></p-sortIcon></th>
+                        <th pSortableColumn="updated_at"  style="width: 20%;">DATE <p-sortIcon field="updated_at"></p-sortIcon></th>
+                        <th pSortableColumn="amount">AMOUNT <p-sortIcon field="amount"></p-sortIcon></th>
+                        <th pSortableColumn="currency">CURRENCY <p-sortIcon field="currency"></p-sortIcon></th>
+                        <th pSortableColumn="user_bank">BANK <p-sortIcon field="user_bank"></p-sortIcon></th>
+                        <th pSortableColumn="user_type_account">TYPEACCOUNT <p-sortIcon field="user_type_account"></p-sortIcon></th>
+                        <th pSortableColumn="user_num_account">NUMACCOUNT <p-sortIcon field="user_num_account"></p-sortIcon></th>
+                        <th pSortableColumn="cost">COST <p-sortIcon field="cost"></p-sortIcon></th>
+                        <th pSortableColumn="iva">IVA <p-sortIcon field="iva"></p-sortIcon></th>
+                        <th pSortableColumn="total">TOTAL <p-sortIcon field="total"></p-sortIcon></th>
+                        <th pSortableColumn="updated_at">UPDATE <p-sortIcon field="updated_at"></p-sortIcon></th>
+                        <th pSortableColumn="status">STATUS <p-sortIcon field="status"></p-sortIcon></th>
+                    </tr>
+                    <tr>
+                        <th>
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'id')"  placeholder="id" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'merchant_name')"  placeholder="merchant name" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'user_name')"  placeholder="user_name" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'reference')"  placeholder="reference" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'referencepro')"  placeholder="referencepro" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'referencepro2')"  placeholder="referencepro2" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'user_doc')"  placeholder="user_doc" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'user_phone')"  placeholder="user_phone" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'method')"  placeholder="method" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'updated_at')"  placeholder="updated_at" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'amount')"  placeholder="amount" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'currency')"  placeholder="currency" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'user_bank')"  placeholder="user_bank" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'user_type_account')"  placeholder="user_type_account" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'user_num_account')"  placeholder="user_num_account" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'cost')"  placeholder="cost" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'iva')"  placeholder="iva" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'total')"  placeholder="total" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'updated_at')"  placeholder="UPDATE" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'status')"  placeholder="status" class="w-full">
+                        </th>
+                     
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-info>
+                    <tr>
+                        <td>
+                            <button type="button" (click)="notificar(info)"  class="btn btn-success" title="Notificar"><i class="pi pi-comment"></i></button>
+                        </td>
+                        <td>
+                            <p>
+                                <strong>{{info.id}}</strong>
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                <strong>{{info.merchant_name}}</strong>
+                            </p>
+                        </td>
+                        <td>
+                            <p class="s">
+                                <strong>{{info.user_name}}</strong> 
+                                <br> 
+                                <samp>{{info.user_email}}</samp>
+                            </p>
+                        </td>
+                        <td><p>{{info.reference}}</p></td>
+                        <td><p>{{info.referencepro}}</p></td>
+                        <td><p>{{info.referencepro2}}</p></td>
+                        <td><p>{{info.user_doc}}</p></td>
+                        <td><p>{{info.user_phone}}</p></td>
+                        <td><p>{{info.method}}</p></td>
+                        <td><p>{{ info.fecha }} <br> <small class="text-success">{{ info.hora }}</small></p></td>
+                        <td><p>{{info.amount | number}}</p></td>
+                        <td><p>{{info.currency }}</p></td>
+                        <td><p>{{info.user_bank}}</p></td>
+                        <td><p>{{info.user_type_account}}</p></td>
+                        <td><p>{{info.user_num_account}}</p></td>
+                        <td><p>{{info.cost | number}}</p></td>
+                        <td><p>{{info.iva | number}}</p></td>
+                        <td><p>{{info.total | number}}</p></td>
+                        <td><p>{{ FormatoFecha(info.updated_at) }}</p></td>
+                        <td>
+                            <span [ngClass]="getSomeClass(info.status)">{{ estadoCashin( info.status ) }}</span>
+                        </td>
+                       
+                    </tr>
+                </ng-template>
+                
+                <ng-template pTemplate="summary">
+                    There are {{table?.length}} table
+                 
+                </ng-template>
+            </p-table>
+        
+        </div>
+        
+    </p-fieldset>
+</div>
+
+
+
+

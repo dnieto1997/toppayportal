@@ -1,0 +1,155 @@
+<app-navbar></app-navbar>
+<div class="container-fluid">
+    <br>
+    <p-fieldset legend="Balance" >
+        
+        <div>
+            <div class="col-md-12">
+
+                    <div class="row text-center" *ngIf="menu.tipo != 'TE' ">
+                        <div class="col-md-3">
+                            <div class="field col-12 md:col-4">
+                                <label for="time">Time / 24h</label>
+                                <br>
+                                <p-calendar [(ngModel)]="date1" [showTime]="true" [showSeconds]="false" inputId="time"></p-calendar>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="field col-12 md:col-4">
+                                <label for="time">Time / 24h</label>
+                                <br>
+                                <p-calendar [(ngModel)]="date2" [showTime]="true" [showSeconds]="false" inputId="time"></p-calendar>
+                            </div>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <span>Seleccionar aliado</span><br>
+                            <select name="aliado" class="form-control"  [(ngModel)]="aliado">
+                                <option *ngFor="let al of aliados" value="{{al.id}}" >{{al.merchant}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <br>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" class="btn btn-secondary" (click)="buscarBalance2()">Buscar</button>
+                                <button type="button" class="btn btn-danger" (click)="Limpiar()">Limpiar</button>
+                            </div>
+                        </div>
+                    </div>
+
+              
+               <hr>
+
+                <table class="table table-bordered text-center">
+                    <tr>
+                        <th><p>Total Pay-In</p></th>
+                        <th><p>Total Pay-Out</p></th>
+                    </tr>
+                    <tr>
+                        <td><p class="text-success"><span class="text-dark">Recaudo: </span> ${{ (totalPayIn) | number }} </p></td>
+                        <td><p class="text-danger"><span class="text-dark">Prestamos: </span>${{ (totalPayOut) | number }} </p></td>
+                    </tr>
+                    <tr>
+                        <td><p class="text-success"><span class="text-dark">Consignaciones:</span> ${{ (disperPayIn) | number }} </p></td>
+                        <td><p class="text-danger"><span class="text-dark">Retiros:</span> ${{ (disperPayOut) | number }} </p></td>
+                    </tr>
+                    <tr>
+                        <td><p class="text-success">${{ (totalPayIn + disperPayIn) | number }} </p></td>
+                        <td><p class="text-danger">${{ (totalPayOut + disperPayOut) | number }} </p></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <p class="text-success">${{ (totalPayIn + disperPayIn) - (totalPayOut + disperPayOut)| number }} </p>
+                        </td>
+                       
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <div class="table-responsive">
+        
+            <p-table #dt [value]="table" [paginator]="true" [rows]="rows" [showCurrentPageReport]="true"  [tableStyle]="{'min-width': '50rem'}" 
+            [globalFilterFields]="['id','fechapago','banco','cuenta','valor','estado']" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+            scrollHeight="600px">
+        
+            <ng-template pTemplate="caption">
+                <div class="flex">
+                    <button type="button" pButton pRipple icon="pi pi-file" (click)="exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+                </div>
+            </ng-template>
+        
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
+                        <th pSortableColumn="fechapago">FECHA PAGO <p-sortIcon field="fechapago"></p-sortIcon></th>
+                        <th pSortableColumn="aliado">ALIADO <p-sortIcon field="aliado"></p-sortIcon></th>
+                        <th pSortableColumn="tipon">TIPO <p-sortIcon field="tipon"></p-sortIcon></th>
+                        <th pSortableColumn="bancoaliado">BANCO <p-sortIcon field="bancoaliado"></p-sortIcon></th>
+                        <th pSortableColumn="cuenta">CUENTA <p-sortIcon field="cuenta"></p-sortIcon></th>
+                        <th pSortableColumn="valor">VALOR <p-sortIcon field="valor"></p-sortIcon></th>
+                        <th pSortableColumn="gmf">GMF <p-sortIcon field="gmf"></p-sortIcon></th>
+                        <th pSortableColumn="estado">ESTADOS <p-sortIcon field="estado"></p-sortIcon></th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'id')"  placeholder="Id" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'fechapago')"  placeholder="Fecha de pago" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'aliado')"  placeholder="Aliado" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'tipon')"  placeholder="Tipo" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'bancoaliado')"  placeholder="Banco" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'cuenta')"  placeholder="Cuenta" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'valor')"  placeholder="Valor" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'gmf')"  placeholder="Gmf" class="w-full">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="filter($event.target, 'estado')"  placeholder="Estado" class="w-full">
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-info>
+                    <tr>
+                        <td><p>{{info.id}}</p></td>
+                        <td><p>{{info.fechapago}}</p></td>
+                        <td><p>{{info.aliado}}</p></td>
+                        <td><p>{{info.tipon}}</p></td>
+                        <td>
+                            <p>
+                                <strong>{{info.bancoaliado}}</strong>
+                            </p>
+                        </td>
+                        <td><p>{{info.cuenta}}</p></td>
+                        <td><p>{{info.valor | number }}</p></td>
+                        <td><p>{{info.gmf | number }}</p></td>
+                        <td>
+                            <span [ngClass]="getSomeClass(info.estado)">{{ info.estadon  }}</span>
+                        </td>
+                    </tr>
+                </ng-template>
+                
+                <ng-template pTemplate="summary">
+                    There are {{table?.length}} table
+                </ng-template>
+            </p-table>
+        
+        </div>
+        
+    </p-fieldset>
+</div>
+
+
+
+
